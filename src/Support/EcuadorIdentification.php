@@ -545,13 +545,13 @@ class EcuadorIdentification
         switch ($type) {
             case self::PrivateCompany:
                 $coefficients = config('laravel-ecuador-identification.private-ruc.coefficients');
-                $check_digit_position = config('laravel-ecuador-identification.private-ruc.coefficients');
+                $check_digit_position = config('laravel-ecuador-identification.private-ruc.check-digit-position');
                 $check_digit_value = $number[$check_digit_position - 1];
                 $numbers = str_split(substr($number, 0, 9));
                 break;
             case self::PublicCompany:
                 $coefficients = config('laravel-ecuador-identification.public-ruc.coefficients');
-                $check_digit_position = config('laravel-ecuador-identification.public-ruc.coefficients');
+                $check_digit_position = config('laravel-ecuador-identification.public-ruc.check-digit-position');
                 $check_digit_value = $number[$check_digit_position - 1];
                 $numbers = str_split(substr($number, 0, 8));
                 break;
