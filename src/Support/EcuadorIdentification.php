@@ -217,7 +217,7 @@ class EcuadorIdentification
      */
     public function validateIsNaturalPersons($number)
     {
-        $result = $this->validateIdentificationCard($number);
+        $result = $this->validatePersonalIdentification($number);
 
         if ($result) {
             return $result;
@@ -269,7 +269,7 @@ class EcuadorIdentification
             return $result;
         }
 
-        $result = $this->validateIdentificationCard($number);
+        $result = $this->validatePersonalIdentification($number);
 
         if ($result) {
             return $result;
