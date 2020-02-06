@@ -3,7 +3,13 @@
     "description": "Validations for Laravel for identifications of people and companies of Ecuador, an important requirement for electronic invoicing.",
     "keywords": [
         "luilliarcec",
-        "laravel-ecuador-identification"
+        "laravel-ecuador-identification",
+        "laravel",
+        "factura",
+        "ecuador",
+        "invoice",
+        "cedula",
+        "ruc"
     ],
     "homepage": "https://github.com/luilliarcec/laravel-ecuador-identification",
     "license": "MIT",
@@ -16,7 +22,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "illuminate/support": "^6.0"
     },
     "require-dev": {
@@ -44,10 +50,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Luilliarcec\\LaravelEcuadorIdentification\\LaravelEcuadorIdentificationServiceProvider"
+                "Luilliarcec\\LaravelEcuadorIdentification\\EcuadorIdentificationServiceProvider"
             ],
             "aliases": {
-                "LaravelEcuadorIdentification": "Luilliarcec\\LaravelEcuadorIdentification\\LaravelEcuadorIdentificationFacade"
+                "LaravelEcuadorIdentification": "Luilliarcec\\LaravelEcuadorIdentification\\Facades\\EcuadorIdentificationFacade"
             }
         }
     }
