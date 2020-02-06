@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
 
 /**
- * @method static string|null validateIdentificationCard(string $number)
+ * @method static string|null validatePersonalIdentification(string $number)
  * @method static string|null validateNaturalPersonRuc(string $number)
  * @method static string|null validatePrivateCompanyRuc(string $number)
  * @method static string|null validatePublicCompanyRuc(string $number)
@@ -14,6 +14,7 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
  * @method static string|null validateIsNaturalPersons(string $number)
  * @method static string|null validateIsJuridicalPersons(string $number)
  * @method static string|null validateAllIdentificatons(string $number)
+ * @method static string getError()
  * @see EcuadorIdentification;
  */
 class EcuadorIdentificationFacade extends Facade

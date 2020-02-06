@@ -98,7 +98,7 @@ class EcuadorIdentification
      * @param string $number Number of Identification Card
      * @return string|null
      */
-    public function validateIdentificationCard($number)
+    public function validatePersonalIdentification($number)
     {
         $this->setError('');
 

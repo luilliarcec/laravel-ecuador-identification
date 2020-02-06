@@ -4,6 +4,7 @@
 namespace Luilliarcec\LaravelEcuadorIdentification\Tests\Unit;
 
 
+use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentificationFacade;
 use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
 use Luilliarcec\LaravelEcuadorIdentification\Tests\TestCase;
 
@@ -118,5 +119,8 @@ class NaturalPersonRucTest extends TestCase
 
         $this->assertEquals($this->ecuadorIdentification->validateNaturalPersonRuc('0134567890001'), $billingCode);
         $this->assertEquals($this->ecuadorIdentification->validateNaturalPersonRuc('1710034065001'), $billingCode);
+
+        $this->assertNull(EcuadorIdentificationFacade::validateNaturalPersonRuc('0154567890001'));
+        $this->assertEquals(EcuadorIdentificationFacade::validateNaturalPersonRuc('0134567890001'), $billingCode);
     }
 }
