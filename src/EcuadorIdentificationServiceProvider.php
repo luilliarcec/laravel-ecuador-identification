@@ -3,8 +3,9 @@
 namespace Luilliarcec\LaravelEcuadorIdentification;
 
 use Illuminate\Support\ServiceProvider;
+use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
 
-class LaravelEcuadorIdentificationServiceProvider extends ServiceProvider
+class EcuadorIdentificationServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -53,8 +54,8 @@ class LaravelEcuadorIdentificationServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-ecuador-identification');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-ecuador-identification', function () {
-            return new LaravelEcuadorIdentification;
+        $this->app->singleton('EcuadorIdentification', function () {
+            return new EcuadorIdentification;
         });
     }
 }
