@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/luilliarcec/laravel-ecuador-identification.svg)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
 [![Build Status](https://img.shields.io/travis/luilliarcec/laravel-ecuador-identification/master.svg)](https://travis-ci.org/luilliarcec/laravel-ecuador-identification)
-[![Total Downloads](https://img.shields.io/packagist/dt/luilliarcec/laravel-ecuador-identification.svg)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
+[![Total Downloads](https://poser.pugx.org/luilliarcec/laravel-ecuador-identification/downloads.svg)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
 [![GitHub license](https://img.shields.io/github/license/luilliarcec/laravel-ecuador-identification.svg)](https://github.com/luilliarcec/laravel-ecuador-identification/blob/master/LICENSE.md)
 
 Laravel Ecuador Identification is a validation library for Laravel, which allows the validation of personal and business identification documents, according to the country's tax regulations.
