@@ -26,9 +26,9 @@ $validator = Validator::make($request->all(), [
 Or with Ecuador Facade
 
 ```php
-use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentificationFacade;
+use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
 
-EcuadorIdentificationFacade::validateNaturalPersonRuc('1710034065001'); // Return null or string code
+EcuadorIdentification::validateNaturalPersonRuc('1710034065001'); // Return null or string code
 ```
 
 ## Installation
@@ -102,9 +102,9 @@ $request->validate([
 Facades return null if the document number does not match any type, otherwise they return the billing code.
 
 ```php
-use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentificationFacade;
+use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
 
-EcuadorIdentificationFacade::validateAllIdentificatons('9999999999999'); // Return '07' => Final Consumer
+EcuadorIdentification::validateAllIdentificatons('9999999999999'); // Return '07' => Final Consumer
 ```
 
 ## Translations

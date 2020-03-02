@@ -3,7 +3,7 @@
 namespace Luilliarcec\LaravelEcuadorIdentification\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
+use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification as Identification;
 
 /**
  * @method static string|null validatePersonalIdentification(string $number)
@@ -15,9 +15,9 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
  * @method static string|null validateIsJuridicalPersons(string $number)
  * @method static string|null validateAllIdentificatons(string $number)
  * @method static string getError()
- * @see EcuadorIdentification;
+ * @see Identification;
  */
-class EcuadorIdentificationFacade extends Facade
+class EcuadorIdentification extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -26,6 +26,6 @@ class EcuadorIdentificationFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'EcuadorIdentification';
+        return Identification::class;
     }
 }

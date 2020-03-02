@@ -2,8 +2,8 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Tests\Units;
 
-use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentificationFacade;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
+use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
+use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification as Identification;
 use Luilliarcec\LaravelEcuadorIdentification\Tests\TestCase;
 
 class PersonalIdentificationTest extends TestCase
@@ -20,7 +20,7 @@ class PersonalIdentificationTest extends TestCase
     {
         parent::setUp();
 
-        $this->ecuadorIdentification = new EcuadorIdentification();
+        $this->ecuadorIdentification = new Identification();
     }
 
     /** @test */
@@ -100,9 +100,9 @@ class PersonalIdentificationTest extends TestCase
         $this->assertEquals($this->ecuadorIdentification->validatePersonalIdentification('0134567890'), $billingCode);
         $this->assertEquals($this->ecuadorIdentification->validatePersonalIdentification('1710034065'), $billingCode);
 
-        $this->assertNull(EcuadorIdentificationFacade::validatePersonalIdentification('0154567890'));
-        $this->assertEquals(EcuadorIdentificationFacade::getError(), 'Field is invalid');
-        
-        $this->assertEquals(EcuadorIdentificationFacade::validatePersonalIdentification('1710034065'), $billingCode);
+        $this->assertNull(EcuadorIdentification::validatePersonalIdentification('0154567890'));
+        $this->assertEquals(EcuadorIdentification::getError(), 'Field is invalid');
+
+        $this->assertEquals(EcuadorIdentification::validatePersonalIdentification('1710034065'), $billingCode);
     }
 }

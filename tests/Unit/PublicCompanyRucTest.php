@@ -3,8 +3,8 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Tests\Unit;
 
-use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentificationFacade;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
+use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
+use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification as Identification;
 use Luilliarcec\LaravelEcuadorIdentification\Tests\TestCase;
 
 class PublicCompanyRucTest extends TestCase
@@ -21,7 +21,7 @@ class PublicCompanyRucTest extends TestCase
     {
         parent::setUp();
 
-        $this->ecuadorIdentification = new EcuadorIdentification();
+        $this->ecuadorIdentification = new Identification();
     }
 
     /** @test */
@@ -114,9 +114,9 @@ class PublicCompanyRucTest extends TestCase
 
         $this->assertEquals($this->ecuadorIdentification->validatePublicCompanyRuc('1760001550001'), $billingCode);
 
-        $this->assertNull(EcuadorIdentificationFacade::validatePublicCompanyRuc('0164567890001'));
-        $this->assertEquals(EcuadorIdentificationFacade::getError(), 'Field is invalid');
+        $this->assertNull(EcuadorIdentification::validatePublicCompanyRuc('0164567890001'));
+        $this->assertEquals(EcuadorIdentification::getError(), 'Field is invalid');
 
-        $this->assertEquals(EcuadorIdentificationFacade::validatePublicCompanyRuc('1760001550001'), $billingCode);
+        $this->assertEquals(EcuadorIdentification::validatePublicCompanyRuc('1760001550001'), $billingCode);
     }
 }
