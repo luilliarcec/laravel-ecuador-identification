@@ -72,4 +72,21 @@ class CustomValidationTest extends TestCase
         $this->assertEquals($this->ecuadorIdentification->validateIsNaturalPersons('1710034065001'),
             $this->app->get('config')['laravel-ecuador-identification.type-identifications.ruc.billing-code']);
     }
+
+    /** @test */
+    public function validate_integration_with_validator_laravel_and_response_error_message()
+    {
+        $data = [
+            'identification' => '1710034065002'
+        ];
+
+        $rules = [
+            'identification' => 'ecuador_identification:natural_ruc'
+        ];
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertEquals($validator->getMessageBag()->get('identification')[0],
+            'The identification field does not have the corresponding country format. (Ecuador)');
+    }
 }
