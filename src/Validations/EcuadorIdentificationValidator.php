@@ -23,6 +23,7 @@ class EcuadorIdentificationValidator extends Validator
      */
     private $types = [
         'personal_identification' => 'validatePersonalIdentification',
+        'all_identifications' => 'validateAllIdentificatons',
         'natural_ruc' => 'validateNaturalPersonRuc',
         'public_ruc' => 'validatePublicCompanyRuc',
         'private_ruc' => 'validatePrivateCompanyRuc',

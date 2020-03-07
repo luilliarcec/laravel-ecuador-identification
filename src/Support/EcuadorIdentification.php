@@ -217,19 +217,8 @@ class EcuadorIdentification
      */
     public function validateIsNaturalPersons($number)
     {
-        $result = $this->validatePersonalIdentification($number);
-
-        if ($result) {
-            return $result;
-        }
-
-        $result = $this->validateNaturalPersonRuc($number);
-
-        if ($result) {
-            return $result;
-        }
-
-        return null;
+        return $this->validatePersonalIdentification($number) !== null ?
+            $this->validatePersonalIdentification($number) : $this->validateNaturalPersonRuc($number);
     }
 
     /**
@@ -240,19 +229,8 @@ class EcuadorIdentification
      */
     public function validateIsJuridicalPersons($number)
     {
-        $result = $this->validatePrivateCompanyRuc($number);
-
-        if ($result) {
-            return $result;
-        }
-
-        $result = $this->validatePublicCompanyRuc($number);
-
-        if ($result) {
-            return $result;
-        }
-
-        return null;
+        return $this->validatePrivateCompanyRuc($number) !== null ?
+            $this->validatePrivateCompanyRuc($number) : $this->validatePublicCompanyRuc($number);
     }
 
     /**

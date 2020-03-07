@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^6.0"
+        "illuminate/support": "^6.0|^7.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
@@ -53,7 +53,7 @@
                 "Luilliarcec\\LaravelEcuadorIdentification\\EcuadorIdentificationServiceProvider"
             ],
             "aliases": {
-                "LaravelEcuadorIdentification": "Luilliarcec\\LaravelEcuadorIdentification\\Facades\\EcuadorIdentificationFacade"
+                "EcuadorIdentification": "Luilliarcec\\LaravelEcuadorIdentification\\Facades\\EcuadorIdentification"
             }
         }
     }
