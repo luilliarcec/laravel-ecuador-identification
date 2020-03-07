@@ -74,6 +74,25 @@ class CustomValidationTest extends TestCase
     }
 
     /** @test */
+    public function validate_rucs()
+    {
+        $this->assertNull($this->ecuadorIdentification->validateRuc('1710034065'));
+        $this->assertNull($this->ecuadorIdentification->validateRuc('1710034065002'));
+        $this->assertNull($this->ecuadorIdentification->validateRuc('9999999999999'));
+        $this->assertNull($this->ecuadorIdentification->validateRuc('1760001520001'));
+        $this->assertNull($this->ecuadorIdentification->validateRuc('1790011274001'));
+
+        $this->assertEquals($this->ecuadorIdentification->validateRuc('1710034065001'),
+            $this->app->get('config')['laravel-ecuador-identification.type-identifications.ruc.billing-code']); // Natural
+
+        $this->assertEquals($this->ecuadorIdentification->validateRuc('1760001550001'),
+            $this->app->get('config')['laravel-ecuador-identification.type-identifications.ruc.billing-code']); // Public
+
+        $this->assertEquals($this->ecuadorIdentification->validateRuc('1790011674001'),
+            $this->app->get('config')['laravel-ecuador-identification.type-identifications.ruc.billing-code']); // Private
+    }
+
+    /** @test */
     public function validate_integration_with_validator_laravel_and_response_error_message()
     {
         $data = [
@@ -81,7 +100,7 @@ class CustomValidationTest extends TestCase
         ];
 
         $rules = [
-            'identification' => 'ecuador_identification:natural_ruc'
+            'identification' => 'ecuador:natural_ruc'
         ];
 
         $validator = $this->app['validator']->make($data, $rules);

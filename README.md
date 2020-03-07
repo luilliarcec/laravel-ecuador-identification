@@ -2,7 +2,8 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/luilliarcec/laravel-ecuador-identification.svg)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
 [![Build Status](https://img.shields.io/travis/luilliarcec/laravel-ecuador-identification/master.svg)](https://travis-ci.org/luilliarcec/laravel-ecuador-identification)
-[![Total Downloads](https://poser.pugx.org/luilliarcec/laravel-ecuador-identification/downloads.svg)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
+[![Quality Score](https://img.shields.io/scrutinizer/g/luilliarcec/laravel-ecuador-identification)](https://scrutinizer-ci.com/g/luilliarcec/laravel-ecuador-identification)
+[![Total Downloads](https://img.shields.io/packagist/dt/luilliarcec/laravel-ecuador-identification)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
 [![GitHub license](https://img.shields.io/github/license/luilliarcec/laravel-ecuador-identification.svg)](https://github.com/luilliarcec/laravel-ecuador-identification/blob/master/LICENSE.md)
 
 Laravel Ecuador Identification is a validation library for Laravel, which allows the validation of personal and business identification documents, according to the country's tax regulations.
@@ -43,9 +44,9 @@ composer require luilliarcec/laravel-ecuador-identification
 
 When using the Laravel validator, each of them can be accessed by simply calling the validations by placing the [rule_name]:[validation_name].
 
-### Ecuador (ecuador_identification)
+### Ecuador (ecuador)
 
-For ecuador use the "ecuador_identification" rule
+For ecuador use the "ecuador" rule
 
 Ecuador has 5 types of documents, identification person or identity card, ruc of natural persons, ruc of private companies and ruc of public companies, in addition to billing the fictitious document of final consumer is used.
 
@@ -54,6 +55,7 @@ Validation rules:
 * [Natural Person Ruc](#rule-natural_ruc)
 * [Private Company Ruc](#rule-private_ruc)
 * [Public Company Ruc](#rule-public_ruc)
+* [Ruc](#rule-ruc)
 * [All Identifications Validations](#rule-all_identifications)
 * [Is Juridical Person](#rule-is_juridical_person)
 * [Is Natural Person](#rule-is_natural_person)
@@ -74,6 +76,10 @@ Validates the Ecuadorian RUC of Private Companies, this validation on the Facade
 #### public_ruc
 Validates the Ecuadorian RUC of Public Companies, this validation on the Facade returns your billing code
 
+<a name="rule-ruc"></a>
+#### ruc
+Validates the Ecuadorian RUC Companies (Public, Natural and Private), this validation on the Facade returns your billing code
+
 <a name="rule-all_identifications"></a>
 #### all_identifications
 Validate the number with all types of documents. It includes the validation of final consumer. This validation in the Facade returns the corresponding billing code, if it fails, it returns null.
@@ -93,7 +99,7 @@ Validations return true or false following the laravel validation convention.
 
 ```php
 $request->validate([
-    'identification' => 'ecuador_identification:personal_identification',
+    'identification' => 'ecuador:personal_identification',
 ]);
 ```
 
@@ -119,7 +125,7 @@ files located in the ``resources\lang\{language_code}\validation`` folder.
     return [
         ...
 
-        'ecuador_identification' => 'The :attribute field does not have the corresponding country format. (Ecuador)',
+        'ecuador' => 'The :attribute field does not have the corresponding country format. (Ecuador)',
     
         /*
         |--------------------------------------------------------------------------
@@ -144,7 +150,7 @@ files located in the ``resources\lang\{language_code}\validation`` folder.
     return [
         ...
 
-        'ecuador_identification' => 'El campo :attribute no tiene el formato de país correspondiente. (Ecuador)',
+        'ecuador' => 'El campo :attribute no tiene el formato de país correspondiente. (Ecuador)',
     
         /*
         |--------------------------------------------------------------------------
