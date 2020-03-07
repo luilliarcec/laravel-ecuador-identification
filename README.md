@@ -12,7 +12,7 @@ It is fully adaptable to Laravel's Facade and Validator Class. Its use is also s
 
 ```php
 $request->validate([
-    'identification' => 'ecuador_identification:natural_ruc',
+    'identification' => 'ecuador:natural_ruc',
 ]);
 ```
 
@@ -20,7 +20,7 @@ Or with Validator Facade
 
 ```php
 $validator = Validator::make($request->all(), [
-    'identification' => 'ecuador_identification:natural_ruc',
+    'identification' => 'ecuador:natural_ruc',
 ]);
 ```
 
