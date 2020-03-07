@@ -16,17 +16,17 @@ class EcuadorIdentification
     /**
      * Natural person ruc
      */
-    const NaturalPerson = 'NaturalPerson';
+    const NATURAL_PERSON = 'NATURAL_PERSON';
 
     /**
      * Private company ruc
      */
-    const PrivateCompany = 'PrivateCompany';
+    const PRIVATE_COMPANY = 'PRIVATE_COMPANY';
 
     /**
      * Public company ruc
      */
-    const PublicCompany = 'PublicCompany';
+    const PUBLIC_COMPANY = 'PUBLIC_COMPANY';
 
     /**
      * Error encapsulator variable
@@ -105,7 +105,7 @@ class EcuadorIdentification
         try {
             $this->initValidation($number, $this->lenght['personal-identification']);
             $this->provinceCodeValidation(substr($number, 0, 2));
-            $this->thirdDigitValidation($number[2], self::NaturalPerson);
+            $this->thirdDigitValidation($number[2], self::NATURAL_PERSON);
             $this->moduleTen($number);
         } catch (EcuadorIdentificationException $e) {
             $this->setError($e->getMessage());
@@ -128,8 +128,8 @@ class EcuadorIdentification
         try {
             $this->initValidation($number, $this->lenght['ruc']);
             $this->provinceCodeValidation(substr($number, 0, 2));
-            $this->thirdDigitValidation($number[2], self::NaturalPerson);
-            $this->theLastDigitsValidation(substr($number, 10, 3), self::NaturalPerson);
+            $this->thirdDigitValidation($number[2], self::NATURAL_PERSON);
+            $this->theLastDigitsValidation(substr($number, 10, 3), self::NATURAL_PERSON);
             $this->moduleTen($number);
         } catch (EcuadorIdentificationException $e) {
             $this->setError($e->getMessage());
@@ -152,9 +152,9 @@ class EcuadorIdentification
         try {
             $this->initValidation($number, $this->lenght['ruc']);
             $this->provinceCodeValidation(substr($number, 0, 2));
-            $this->thirdDigitValidation($number[2], self::PrivateCompany);
-            $this->theLastDigitsValidation(substr($number, 10, 3), self::PrivateCompany);
-            $this->moduleEleven($number, self::PrivateCompany);
+            $this->thirdDigitValidation($number[2], self::PRIVATE_COMPANY);
+            $this->theLastDigitsValidation(substr($number, 10, 3), self::PRIVATE_COMPANY);
+            $this->moduleEleven($number, self::PRIVATE_COMPANY);
         } catch (EcuadorIdentificationException $e) {
             $this->setError($e->getMessage());
             return null;
@@ -176,9 +176,9 @@ class EcuadorIdentification
         try {
             $this->initValidation($number, $this->lenght['ruc']);
             $this->provinceCodeValidation(substr($number, 0, 2));
-            $this->thirdDigitValidation($number[2], self::PublicCompany);
-            $this->theLastDigitsValidation(substr($number, 9, 4), self::PublicCompany);
-            $this->moduleEleven($number, self::PublicCompany);
+            $this->thirdDigitValidation($number[2], self::PUBLIC_COMPANY);
+            $this->theLastDigitsValidation(substr($number, 9, 4), self::PUBLIC_COMPANY);
+            $this->moduleEleven($number, self::PUBLIC_COMPANY);
         } catch (EcuadorIdentificationException $e) {
             $this->setError($e->getMessage());
             return null;
@@ -241,37 +241,23 @@ class EcuadorIdentification
      */
     public function validateAllIdentificatons($number)
     {
-        $result = $this->validateFinalConsumer($number);
-
-        if ($result) {
+        if (($result = $this->validateFinalConsumer($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validatePersonalIdentification($number);
-
-        if ($result) {
+        if (($result = $this->validatePersonalIdentification($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validateNaturalPersonRuc($number);
-
-        if ($result) {
+        if (($result = $this->validateNaturalPersonRuc($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validatePrivateCompanyRuc($number);
-
-        if ($result) {
+        if (($result = $this->validatePrivateCompanyRuc($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validatePublicCompanyRuc($number);
-
-        if ($result) {
-            return $result;
-        }
-
-        return null;
+        return $this->validatePublicCompanyRuc($number);
     }
 
     /**
@@ -342,20 +328,20 @@ class EcuadorIdentification
     private function thirdDigitValidation($value, $type)
     {
         switch ($type) {
-            case self::NaturalPerson:
+            case self::NATURAL_PERSON:
                 $min = config('laravel-ecuador-identification.personal-identification.third-digit.min');
                 $max = config('laravel-ecuador-identification.personal-identification.third-digit.max');
                 if ($value < $min || $value > $max)
                     throw new EcuadorIdentificationException("Field must have the third digit between {$min} and {$max}.");
                 break;
 
-            case self::PublicCompany:
+            case self::PUBLIC_COMPANY:
                 $thirdDigit = config('laravel-ecuador-identification.public-ruc.third-digit');
                 if ($value != $thirdDigit)
                     throw new EcuadorIdentificationException("Field must have the third digit equal to {$thirdDigit}.");
                 break;
 
-            case self::PrivateCompany:
+            case self::PRIVATE_COMPANY:
                 $thirdDigit = config('laravel-ecuador-identification.private-ruc.third-digit');
                 if ($value != $thirdDigit)
                     throw new EcuadorIdentificationException("Field must have the third digit equal to {$thirdDigit}.");
@@ -382,21 +368,21 @@ class EcuadorIdentification
     private function theLastDigitsValidation($value, $type)
     {
         switch ($type) {
-            case self::NaturalPerson:
+            case self::NATURAL_PERSON:
                 $lastDigits = config('laravel-ecuador-identification.natural-ruc.last-digits');
                 if ($value != $lastDigits) {
                     throw new EcuadorIdentificationException("Field does not have the last digits equal to {$lastDigits}");
                 }
                 break;
 
-            case self::PrivateCompany:
+            case self::PRIVATE_COMPANY:
                 $lastDigits = config('laravel-ecuador-identification.private-ruc.last-digits');
                 if ($value != $lastDigits) {
                     throw new EcuadorIdentificationException("Field does not have the last digits equal to {$lastDigits}");
                 }
                 break;
 
-            case self::PublicCompany:
+            case self::PUBLIC_COMPANY:
                 $lastDigits = config('laravel-ecuador-identification.public-ruc.last-digits');
                 if ($value != $lastDigits) {
                     throw new EcuadorIdentificationException("Field does not have the last digits equal to {$lastDigits}");
@@ -521,13 +507,13 @@ class EcuadorIdentification
     protected function moduleEleven($number, $type)
     {
         switch ($type) {
-            case self::PrivateCompany:
+            case self::PRIVATE_COMPANY:
                 $coefficients = config('laravel-ecuador-identification.private-ruc.coefficients');
                 $check_digit_position = config('laravel-ecuador-identification.private-ruc.check-digit-position');
                 $check_digit_value = $number[$check_digit_position - 1];
                 $numbers = str_split(substr($number, 0, 9));
                 break;
-            case self::PublicCompany:
+            case self::PUBLIC_COMPANY:
                 $coefficients = config('laravel-ecuador-identification.public-ruc.coefficients');
                 $check_digit_position = config('laravel-ecuador-identification.public-ruc.check-digit-position');
                 $check_digit_value = $number[$check_digit_position - 1];
@@ -535,7 +521,6 @@ class EcuadorIdentification
                 break;
             default:
                 throw new EcuadorIdentificationException('Field does not have this type of identification.');
-                break;
         }
 
         $total = 0;
