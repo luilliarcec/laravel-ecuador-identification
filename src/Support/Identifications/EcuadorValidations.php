@@ -18,14 +18,14 @@ class EcuadorValidations
     /**
      * Length of the different types of identification
      *
-     * @var array
+     * @var \Illuminate\Config\Repository|mixed|string
      */
     protected $lenght;
 
     /**
      * Billing code for identification types
      *
-     * @var array
+     * @var \Illuminate\Config\Repository|mixed|string
      */
     protected $billingCode;
 
