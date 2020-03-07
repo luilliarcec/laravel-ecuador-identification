@@ -241,37 +241,23 @@ class EcuadorIdentification
      */
     public function validateAllIdentificatons($number)
     {
-        $result = $this->validateFinalConsumer($number);
-
-        if ($result) {
+        if (($result = $this->validateFinalConsumer($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validatePersonalIdentification($number);
-
-        if ($result) {
+        if (($result = $this->validatePersonalIdentification($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validateNaturalPersonRuc($number);
-
-        if ($result) {
+        if (($result = $this->validateNaturalPersonRuc($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validatePrivateCompanyRuc($number);
-
-        if ($result) {
+        if (($result = $this->validatePrivateCompanyRuc($number)) !== null) {
             return $result;
         }
 
-        $result = $this->validatePublicCompanyRuc($number);
-
-        if ($result) {
-            return $result;
-        }
-
-        return null;
+        return $this->validatePublicCompanyRuc($number);
     }
 
     /**
