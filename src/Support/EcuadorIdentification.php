@@ -2,7 +2,7 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Support;
 
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\EcuadorIdentificationException;
+use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\FinalCustomer;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\NaturalRuc;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\PersonalIdentification;
@@ -28,9 +28,9 @@ class EcuadorIdentification
     /**
      * Set Error
      *
-     * @param string $error
+     * @param string|null $error
      */
-    protected function setError(string $error): void
+    protected function setError($error): void
     {
         $this->error = $error;
     }
@@ -38,26 +38,46 @@ class EcuadorIdentification
     /**
      * Get Error
      *
-     * @return string
+     * @return string|null
      */
-    public function getError(): string
+    public function getError()
     {
         return $this->error;
     }
 
     /**
-     * Validates the Ecuadorian Identification Card
+     * Validates the Ecuadorian Final Consumer
      *
-     * @param string $number Number of Identification Card
+     * @param string $identification_number Final Consumer Identification
      * @return string|null
      */
-    public function validatePersonalIdentification($number)
+    public function validateFinalConsumer(string $identification_number)
     {
-        $identification = new PersonalIdentification();
+        $this->setError(null);
 
         try {
-            return $identification->validate($number);
-        } catch (EcuadorIdentificationException $e) {
+            $identification = new FinalCustomer();
+            return $identification->validate($identification_number);
+        } catch (IdentificationException $e) {
+            $this->setError($e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Validates the Ecuadorian Identification Card
+     *
+     * @param string $identification_number Number of Identification Card
+     * @return string|null
+     */
+    public function validatePersonalIdentification(string $identification_number)
+    {
+        $this->setError(null);
+
+        try {
+            $identification = new PersonalIdentification();
+            return $identification->validate($identification_number);
+        } catch (IdentificationException $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -66,34 +86,17 @@ class EcuadorIdentification
     /**
      * Validates the Ecuadorian RUC of Natural Person
      *
-     * @param string $number Number of RUC Natural Person
+     * @param string $identification_number Number of RUC Natural Person
      * @return string|null
      */
-    public function validateNaturalPersonRuc($number)
+    public function validateNaturalRuc(string $identification_number)
     {
-        $identification = new NaturalRuc();
+        $this->setError(null);
 
         try {
-            return $identification->validate($number);
-        } catch (EcuadorIdentificationException $e) {
-            $this->setError($e->getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * Validates the Ecuadorian RUC of Private Companies
-     *
-     * @param string $number Number of RUC Private Companies
-     * @return string|null
-     */
-    public function validatePrivateCompanyRuc($number)
-    {
-        $identification = new PrivateRuc();
-
-        try {
-            return $identification->validate($number);
-        } catch (EcuadorIdentificationException $e) {
+            $identification = new NaturalRuc();
+            return $identification->validate($identification_number);
+        } catch (IdentificationException $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -102,34 +105,36 @@ class EcuadorIdentification
     /**
      * Validates the Ecuadorian RUC of Public Companies
      *
-     * @param string $number Number of RUC Public Companies
+     * @param string $identification_number Number of RUC Public Companies
      * @return string|null
      */
-    public function validatePublicCompanyRuc($number)
+    public function validatePublicRuc(string $identification_number)
     {
-        $identification = new PublicRuc();
+        $this->setError(null);
 
         try {
-            return $identification->validate($number);
-        } catch (EcuadorIdentificationException $e) {
+            $identification = new PublicRuc();
+            return $identification->validate($identification_number);
+        } catch (IdentificationException $e) {
             $this->setError($e->getMessage());
             return null;
         }
     }
 
     /**
-     * Validates the Ecuadorian Final Consumer
+     * Validates the Ecuadorian RUC of Private Companies
      *
-     * @param $number
+     * @param string $identification_number Number of RUC Private Companies
      * @return string|null
      */
-    public function validateFinalConsumer($number)
+    public function validatePrivateRuc(string $identification_number)
     {
-        $identification = new FinalCustomer();
+        $this->setError(null);
 
         try {
-            return $identification->validate($number);
-        } catch (EcuadorIdentificationException $e) {
+            $identification = new PrivateRuc();
+            return $identification->validate($identification_number);
+        } catch (IdentificationException $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -138,70 +143,60 @@ class EcuadorIdentification
     /**
      * Validates the Ecuadorian Ruc's
      *
-     * @param $number
+     * @param string $identification_number Number of RUC
      * @return string|null
      */
-    public function validateRuc($number)
+    public function validateRuc(string $identification_number)
     {
-        if (($result = $this->validatePrivateCompanyRuc($number)) !== null) {
+        if (($result = $this->validatePrivateRuc($identification_number)) !== null) {
             return $result;
         }
 
-        if (($result = $this->validatePublicCompanyRuc($number)) !== null) {
+        if (($result = $this->validatePublicRuc($identification_number)) !== null) {
             return $result;
         }
 
-        return $this->validateNaturalPersonRuc($number);
+        return $this->validateNaturalRuc($identification_number);
     }
 
     /**
      * Validate that the number belongs to natural persons.
      *
-     * @param $number
+     * @param string $identification_number Number of identification
      * @return string|null
      */
-    public function validateIsNaturalPersons($number)
+    public function validateIsNaturalPersons(string $identification_number)
     {
-        return $this->validatePersonalIdentification($number) !== null ?
-            $this->validatePersonalIdentification($number) : $this->validateNaturalPersonRuc($number);
+        return $this->validatePersonalIdentification($identification_number) ?: $this->validateNaturalRuc($identification_number);
     }
 
     /**
      * Validate that the number belongs to juridical persons.
      *
-     * @param $number
+     * @param string $identification_number Number of identification
      * @return string|null
      */
-    public function validateIsJuridicalPersons($number)
+    public function validateIsJuridicalPersons(string $identification_number)
     {
-        return $this->validatePrivateCompanyRuc($number) !== null ?
-            $this->validatePrivateCompanyRuc($number) : $this->validatePublicCompanyRuc($number);
+        return $this->validatePrivateRuc($identification_number) ?: $this->validatePublicRuc($identification_number);
     }
 
     /**
      * Validate the number with all types of documents.
      *
-     * @param $number
+     * @param string $identification_number Number of identification
      * @return string|null
      */
-    public function validateAllIdentificatons($number)
+    public function validateAllTypeIdentification(string $identification_number)
     {
-        if (($result = $this->validateFinalConsumer($number)) !== null) {
+        if (($result = $this->validateFinalConsumer($identification_number)) !== null) {
             return $result;
         }
 
-        if (($result = $this->validatePersonalIdentification($number)) !== null) {
+        if (($result = $this->validateRuc($identification_number)) !== null) {
             return $result;
         }
 
-        if (($result = $this->validateNaturalPersonRuc($number)) !== null) {
-            return $result;
-        }
-
-        if (($result = $this->validatePrivateCompanyRuc($number)) !== null) {
-            return $result;
-        }
-
-        return $this->validatePublicCompanyRuc($number);
+        return $this->validatePersonalIdentification($identification_number);
     }
 }

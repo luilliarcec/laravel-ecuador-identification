@@ -1,39 +1,24 @@
 <?php
 
-
 namespace Luilliarcec\LaravelEcuadorIdentification\Support\Identifications;
 
+use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
+use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
-use Luilliarcec\LaravelEcuadorIdentification\Contracts\IdentificationContract;
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\EcuadorIdentificationException;
-
-class FinalCustomer extends EcuadorValidations implements IdentificationContract
+class FinalCustomer extends BaseIdentification
 {
     /**
      * FinalCustomer constructor.
      */
     public function __construct()
     {
-        parent::__construct();
-
-        $this->billingCode = config('laravel-ecuador-identification.type-identifications.final-customer.billing-code');
+        $this->billingCode = '07';
     }
 
-    /**
-     * Validate this identification
-     *
-     * @param string $number
-     * @return \Illuminate\Config\Repository|mixed|string
-     * @throws EcuadorIdentificationException
-     */
-    public function validate(string $number)
+    public function validate(string $identification_number): string
     {
-        try {
-            if ($number != config('laravel-ecuador-identification.final-customer.unique-value')) {
-                throw new EcuadorIdentificationException("Field is invalid");
-            }
-        } catch (EcuadorIdentificationException $e) {
-            throw new EcuadorIdentificationException($e->getMessage());
+        if ($identification_number != "9999999999999") {
+            throw new IdentificationException('The identification number is invalid.');
         }
 
         return $this->billingCode;
