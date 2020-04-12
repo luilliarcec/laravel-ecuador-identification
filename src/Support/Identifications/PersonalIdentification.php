@@ -1,41 +1,30 @@
 <?php
 
-
 namespace Luilliarcec\LaravelEcuadorIdentification\Support\Identifications;
 
+use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
+use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
-use Luilliarcec\LaravelEcuadorIdentification\Contracts\IdentificationContract;
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\EcuadorIdentificationException;
-
-class PersonalIdentification extends EcuadorValidations implements IdentificationContract
+class PersonalIdentification extends BaseIdentification
 {
     /**
      * PersonalIdentification constructor.
      */
     public function __construct()
     {
-        parent::__construct();
-
-        $this->lenght = config('laravel-ecuador-identification.type-identifications.personal-identification.length');
-        $this->billingCode = config('laravel-ecuador-identification.type-identifications.personal-identification.billing-code');
+        $this->lenght = 10;
+        $this->billingCode = '05';
+        $this->coefficients = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        $this->checkDigitPosition = 10;
+        $this->thirdDigit = 5;
     }
 
-    /**
-     * Validate this identification
-     *
-     * @param string $number
-     * @return \Illuminate\Config\Repository|mixed|string
-     * @throws EcuadorIdentificationException
-     */
-    public function validate(string $number)
+    protected function thirdDigitValidation(string $identification_number): void
     {
-        try {
-            $this->validateInitial($number, $this);
-            $this->moduleTen($number);
-        } catch (EcuadorIdentificationException $e) {
-            throw new EcuadorIdentificationException($e->getMessage());
-        }
+        $third_digit = $this->getThirdDigitValue($identification_number);
 
-        return $this->billingCode;
+        if ($third_digit > $this->thirdDigit) {
+            throw new IdentificationException("Field must have the third digit less than or equal to {$this->thirdDigit}.");
+        }
     }
 }

@@ -29,7 +29,7 @@ Or with Ecuador Facade
 ```php
 use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
 
-EcuadorIdentification::validateNaturalPersonRuc('1710034065001'); // Return null or string code
+EcuadorIdentification::validateNaturalRuc('1710034065001'); // Return null or string code
 ```
 
 ## Installation
@@ -51,14 +51,19 @@ For ecuador use the "ecuador" rule
 Ecuador has 5 types of documents, identification person or identity card, ruc of natural persons, ruc of private companies and ruc of public companies, in addition to billing the fictitious document of final consumer is used.
 
 Validation rules:
+* [Final Customer](#rule-final_customer)
 * [Personal Identification](#rule-personal_identification)
-* [Natural Person Ruc](#rule-natural_ruc)
-* [Private Company Ruc](#rule-private_ruc)
-* [Public Company Ruc](#rule-public_ruc)
+* [Natural Ruc](#rule-natural_ruc)
+* [Private Ruc](#rule-private_ruc)
+* [Public Ruc](#rule-public_ruc)
 * [Ruc](#rule-ruc)
-* [All Identifications Validations](#rule-all_identifications)
 * [Is Juridical Person](#rule-is_juridical_person)
 * [Is Natural Person](#rule-is_natural_person)
+* [All Type Identifications](#rule-all_identifications)
+
+<a name="rule-final_customer"></a>
+#### final_customer
+Validate the final consumer document, this validation on the Facade returns your billing code
 
 <a name="rule-personal_identification"></a>
 #### personal_identification
@@ -80,10 +85,6 @@ Validates the Ecuadorian RUC of Public Companies, this validation on the Facade 
 #### ruc
 Validates the Ecuadorian RUC Companies (Public, Natural and Private), this validation on the Facade returns your billing code
 
-<a name="rule-all_identifications"></a>
-#### all_identifications
-Validate the number with all types of documents. It includes the validation of final consumer. This validation in the Facade returns the corresponding billing code, if it fails, it returns null.
-
 <a name="rule-is_juridical_person"></a>
 #### is_juridical_person
 The group called juridical persons are those that have an private ruc or a public ruc such validation on the Facade will return the billing code if the person has one of these documents, otherwise null.
@@ -91,6 +92,11 @@ The group called juridical persons are those that have an private ruc or a publi
 <a name="rule-is_natural_person"></a>
 #### is_natural_person
 The group called natural persons are those that have an Ecuadorian identity card or a natural ruc such validation on the Facade will return the billing code if the person has one of these documents, otherwise null.
+
+<a name="rule-all_identifications"></a>
+#### all_identifications
+Validate the number with all types of documents. It includes the validation of final consumer. This validation in the Facade returns the corresponding billing code, if it fails, it returns null.
+
 
 ### Example
 #### Validator
@@ -110,7 +116,7 @@ Facades return null if the document number does not match any type, otherwise th
 ```php
 use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
 
-EcuadorIdentification::validateAllIdentificatons('9999999999999'); // Return '07' => Final Consumer
+EcuadorIdentification::validateAllTypeIdentification('9999999999999'); // Return '07' => Final Consumer
 ```
 
 ## Translations

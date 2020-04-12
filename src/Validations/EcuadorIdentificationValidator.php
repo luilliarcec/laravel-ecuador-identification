@@ -4,7 +4,7 @@
 namespace Luilliarcec\LaravelEcuadorIdentification\Validations;
 
 use Illuminate\Validation\Validator;
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\EcuadorIdentificationException;
+use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
 
 class EcuadorIdentificationValidator extends Validator
@@ -22,15 +22,15 @@ class EcuadorIdentificationValidator extends Validator
      * @var array
      */
     private $types = [
-        'personal_identification' => 'validatePersonalIdentification',
-        'natural_ruc' => 'validateNaturalPersonRuc',
-        'public_ruc' => 'validatePublicCompanyRuc',
-        'private_ruc' => 'validatePrivateCompanyRuc',
         'final_customer' => 'validateFinalConsumer',
+        'personal_identification' => 'validatePersonalIdentification',
+        'natural_ruc' => 'validateNaturalRuc',
+        'public_ruc' => 'validatePublicRuc',
+        'private_ruc' => 'validatePrivateRuc',
         'ruc' => 'validateRuc',
-        'all_identifications' => 'validateAllIdentificatons',
-        'is_juridical_person' => 'validateIsJuridicalPersons',
         'is_natural_person' => 'validateIsNaturalPersons',
+        'is_juridical_person' => 'validateIsJuridicalPersons',
+        'all_identifications' => 'validateAllTypeIdentification',
     ];
 
     /**
@@ -40,7 +40,7 @@ class EcuadorIdentificationValidator extends Validator
      * @param $value
      * @param $parameters
      * @return bool
-     * @throws EcuadorIdentificationException
+     * @throws IdentificationException
      */
     public function validateEcuador($attribute, $value, $parameters)
     {
@@ -51,7 +51,7 @@ class EcuadorIdentificationValidator extends Validator
         try {
             $this->isValid = $validator->{$this->types[$parameters[0]]}($value) == null ? false : true;
         } catch (\Exception $exception) {
-            throw new EcuadorIdentificationException("Custom validation rule {$lowerRule}:{$parameters[0]} does not exist");
+            throw new IdentificationException("Custom validation rule {$lowerRule}:{$parameters[0]} does not exist");
         }
 
         if (!$this->isValid) {

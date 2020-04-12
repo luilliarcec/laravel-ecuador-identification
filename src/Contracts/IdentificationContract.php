@@ -7,10 +7,10 @@ namespace Luilliarcec\LaravelEcuadorIdentification\Contracts;
 interface IdentificationContract
 {
     /**
-     * Validate the identification
+     * Validate length identification, province code, third digit, lasts digits and module validations
      *
-     * @param string $number
-     * @return string
+     * @param string $identification_number Number of the identification
+     * @return string|null Billing code
      */
-    public function validate(string $number);
+    public function validate(string $identification_number);
 }
