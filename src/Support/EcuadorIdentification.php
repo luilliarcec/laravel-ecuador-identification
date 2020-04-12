@@ -136,6 +136,25 @@ class EcuadorIdentification
     }
 
     /**
+     * Validates the Ecuadorian Ruc's
+     *
+     * @param $number
+     * @return string|null
+     */
+    public function validateRuc($number)
+    {
+        if (($result = $this->validatePrivateCompanyRuc($number)) !== null) {
+            return $result;
+        }
+
+        if (($result = $this->validatePublicCompanyRuc($number)) !== null) {
+            return $result;
+        }
+
+        return $this->validateNaturalPersonRuc($number);
+    }
+
+    /**
      * Validate that the number belongs to natural persons.
      *
      * @param $number

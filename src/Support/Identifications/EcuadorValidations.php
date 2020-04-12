@@ -18,14 +18,14 @@ class EcuadorValidations
     /**
      * Length of the different types of identification
      *
-     * @var array
+     * @var \Illuminate\Config\Repository|mixed|string
      */
     protected $lenght;
 
     /**
      * Billing code for identification types
      *
-     * @var array
+     * @var \Illuminate\Config\Repository|mixed|string
      */
     protected $billingCode;
 
@@ -159,8 +159,6 @@ class EcuadorValidations
      */
     protected function validateLastDigits($value, IdentificationContract $type)
     {
-        $lastDigits = null;
-
         if ($type instanceof NaturalRuc) {
             $lastDigits = config('laravel-ecuador-identification.natural-ruc.last-digits');
         } elseif ($type instanceof PrivateRuc) {

@@ -23,10 +23,12 @@ class EcuadorIdentificationValidator extends Validator
      */
     private $types = [
         'personal_identification' => 'validatePersonalIdentification',
-        'all_identifications' => 'validateAllIdentificatons',
         'natural_ruc' => 'validateNaturalPersonRuc',
         'public_ruc' => 'validatePublicCompanyRuc',
         'private_ruc' => 'validatePrivateCompanyRuc',
+        'final_customer' => 'validateFinalConsumer',
+        'ruc' => 'validateRuc',
+        'all_identifications' => 'validateAllIdentificatons',
         'is_juridical_person' => 'validateIsJuridicalPersons',
         'is_natural_person' => 'validateIsNaturalPersons',
     ];
@@ -40,7 +42,7 @@ class EcuadorIdentificationValidator extends Validator
      * @return bool
      * @throws EcuadorIdentificationException
      */
-    public function validateEcuadorIdentification($attribute, $value, $parameters)
+    public function validateEcuador($attribute, $value, $parameters)
     {
         $validator = new EcuadorIdentification();
 
