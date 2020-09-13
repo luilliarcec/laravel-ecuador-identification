@@ -2,7 +2,7 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Support;
 
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
+use Exception;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\FinalCustomer;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\NaturalRuc;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\PersonalIdentification;
@@ -58,7 +58,7 @@ class EcuadorIdentification
         try {
             $identification = new FinalCustomer();
             return $identification->validate($identification_number);
-        } catch (IdentificationException $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -77,7 +77,7 @@ class EcuadorIdentification
         try {
             $identification = new PersonalIdentification();
             return $identification->validate($identification_number);
-        } catch (IdentificationException $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -96,7 +96,7 @@ class EcuadorIdentification
         try {
             $identification = new NaturalRuc();
             return $identification->validate($identification_number);
-        } catch (IdentificationException $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -115,7 +115,7 @@ class EcuadorIdentification
         try {
             $identification = new PublicRuc();
             return $identification->validate($identification_number);
-        } catch (IdentificationException $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
         }
@@ -134,7 +134,7 @@ class EcuadorIdentification
         try {
             $identification = new PrivateRuc();
             return $identification->validate($identification_number);
-        } catch (IdentificationException $e) {
+        } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
         }
