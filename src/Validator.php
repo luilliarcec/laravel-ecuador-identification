@@ -3,6 +3,7 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification;
 
+use BadMethodCallException;
 use Exception;
 use Illuminate\Validation\Validator as BaseValidator;
 use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification;
@@ -44,7 +45,9 @@ class Validator extends BaseValidator
 
             return $this->passesEcuador($parameters, $value);
         } catch (Exception $exception) {
-            throw new Exception("Custom validation rule {$lowerRule}:{$parameters[0]} does not exist");
+            throw new BadMethodCallException(sprintf(
+                'Method %s::%s does not exist.', static::class, $parameters[0]
+            ));
         }
     }
 
