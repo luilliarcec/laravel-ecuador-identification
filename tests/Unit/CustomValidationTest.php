@@ -24,11 +24,11 @@ class CustomValidationTest extends TestCase
     /** @test */
     public function validate_that_all_type_document_return_correct_value()
     {
-        $this->assertEquals($this->ecuadorIdentification->validateAllTypeIdentification('1710034065'), '05'); // Personal Identification
-        $this->assertEquals($this->ecuadorIdentification->validateAllTypeIdentification('1710034065001'), '04'); // Natural RUC
-        $this->assertEquals($this->ecuadorIdentification->validateAllTypeIdentification('1790011674001'), '04'); // Private RUC
-        $this->assertEquals($this->ecuadorIdentification->validateAllTypeIdentification('1760001550001'), '04'); // Public RUC
-        $this->assertEquals($this->ecuadorIdentification->validateAllTypeIdentification('9999999999999'), '07'); // Final Customer
+        $this->assertEquals('05', $this->ecuadorIdentification->validateAllTypeIdentification('1710034065')); // Personal Identification
+        $this->assertEquals('04', $this->ecuadorIdentification->validateAllTypeIdentification('1710034065001')); // Natural RUC
+        $this->assertEquals('04', $this->ecuadorIdentification->validateAllTypeIdentification('1790011674001')); // Private RUC
+        $this->assertEquals('04', $this->ecuadorIdentification->validateAllTypeIdentification('1760001550001')); // Public RUC
+        $this->assertEquals('07', $this->ecuadorIdentification->validateAllTypeIdentification('9999999999999')); // Final Customer
         $this->assertNull($this->ecuadorIdentification->validateAllTypeIdentification('9999999999998'));
     }
 
@@ -39,8 +39,8 @@ class CustomValidationTest extends TestCase
         $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPersons('9999999999999'));
         $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPersons('1710034065001'));
 
-        $this->assertEquals($this->ecuadorIdentification->validateIsJuridicalPersons('1790011674001'), '04');
-        $this->assertEquals($this->ecuadorIdentification->validateIsJuridicalPersons('1760001550001'), '04');
+        $this->assertEquals('04', $this->ecuadorIdentification->validateIsJuridicalPersons('1790011674001'));
+        $this->assertEquals('04', $this->ecuadorIdentification->validateIsJuridicalPersons('1760001550001'));
     }
 
     /** @test */
@@ -50,8 +50,8 @@ class CustomValidationTest extends TestCase
         $this->assertNull($this->ecuadorIdentification->validateIsNaturalPersons('1760001550001'));
         $this->assertNull($this->ecuadorIdentification->validateIsNaturalPersons('9999999999999'));
 
-        $this->assertEquals($this->ecuadorIdentification->validateIsNaturalPersons('1710034065'), '05');
-        $this->assertEquals($this->ecuadorIdentification->validateIsNaturalPersons('1710034065001'), '04');
+        $this->assertEquals('05', $this->ecuadorIdentification->validateIsNaturalPersons('1710034065'));
+        $this->assertEquals('04', $this->ecuadorIdentification->validateIsNaturalPersons('1710034065001'));
     }
 
     /** @test */
@@ -63,9 +63,9 @@ class CustomValidationTest extends TestCase
         $this->assertNull($this->ecuadorIdentification->validateRuc('1760001520001'));
         $this->assertNull($this->ecuadorIdentification->validateRuc('1790011274001'));
 
-        $this->assertEquals($this->ecuadorIdentification->validateRuc('1710034065001'), '04'); // Natural
-        $this->assertEquals($this->ecuadorIdentification->validateRuc('1760001550001'), '04'); // Public
-        $this->assertEquals($this->ecuadorIdentification->validateRuc('1790011674001'), '04'); // Private
+        $this->assertEquals('04', $this->ecuadorIdentification->validateRuc('1710034065001')); // Natural
+        $this->assertEquals('04', $this->ecuadorIdentification->validateRuc('1760001550001')); // Public
+        $this->assertEquals('04', $this->ecuadorIdentification->validateRuc('1790011674001')); // Private
     }
 
     /** @test */
@@ -81,7 +81,23 @@ class CustomValidationTest extends TestCase
 
         $validator = $this->app['validator']->make($data, $rules);
 
-        $this->assertEquals($validator->getMessageBag()->get('identification')[0],
-            'The identification field does not have the corresponding country format. (Ecuador)');
+        $this->assertEquals('The identification field does not have the corresponding country format. (Ecuador)',
+            $validator->getMessageBag()->get('identification')[0]);
+    }
+
+    /** @test */
+    public function validate_integration_with_validator_laravel_and_response_success()
+    {
+        $data = [
+            'identification' => '1710034065001'
+        ];
+
+        $rules = [
+            'identification' => 'ecuador:natural_ruc'
+        ];
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertFalse($validator->fails());
     }
 }

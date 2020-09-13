@@ -2,7 +2,6 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Support\Identifications;
 
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class PersonalIdentification extends BaseIdentification
@@ -24,7 +23,7 @@ class PersonalIdentification extends BaseIdentification
         $third_digit = $this->getThirdDigitValue($identification_number);
 
         if ($third_digit > $this->thirdDigit) {
-            throw new IdentificationException("Field must have the third digit less than or equal to {$this->thirdDigit}.");
+            throw new \Exception("Field must have the third digit less than or equal to {$this->thirdDigit}.");
         }
     }
 }

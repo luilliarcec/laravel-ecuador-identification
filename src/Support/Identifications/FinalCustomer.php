@@ -2,7 +2,6 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Support\Identifications;
 
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class FinalCustomer extends BaseIdentification
@@ -18,7 +17,7 @@ class FinalCustomer extends BaseIdentification
     public function validate(string $identification_number): string
     {
         if ($identification_number != "9999999999999") {
-            throw new IdentificationException('The identification number is invalid.');
+            throw new \Exception('The identification number is invalid.');
         }
 
         return $this->billingCode;

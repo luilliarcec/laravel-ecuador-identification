@@ -2,8 +2,8 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Support;
 
+use Exception;
 use Luilliarcec\LaravelEcuadorIdentification\Contracts\IdentificationContract;
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\PrivateRuc;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\PublicRuc;
 
@@ -56,7 +56,7 @@ class BaseIdentification implements IdentificationContract
      *
      * @param string $identification_number Identification document
      * @return string|null Billing code or null
-     * @throws IdentificationException
+     * @throws Exception
      */
     public function validate(string $identification_number)
     {
@@ -78,20 +78,20 @@ class BaseIdentification implements IdentificationContract
      * Initial validation of the identification, not empty, only digits, not less than the given length.
      *
      * @param string $identification_number Identification document
-     * @throws IdentificationException
+     * @throws Exception
      */
     protected function lenghtValidation(string $identification_number): void
     {
         if (empty($identification_number)) {
-            throw new IdentificationException('Field must have a value.');
+            throw new Exception('Field must have a value.');
         }
 
         if (!ctype_digit($identification_number)) {
-            throw new IdentificationException('Field must be digits.');
+            throw new Exception('Field must be digits.');
         }
 
         if (strlen($identification_number) != $this->lenght) {
-            throw new IdentificationException("Field must be {$this->lenght} digits.");
+            throw new Exception("Field must be {$this->lenght} digits.");
         }
     }
 
@@ -101,14 +101,14 @@ class BaseIdentification implements IdentificationContract
      * so the first two numbers will not be greater than 24 or less than 1
      *
      * @param string $identification_number Identification document
-     * @throws IdentificationException
+     * @throws Exception
      */
     protected function provinceCodeValidation(string $identification_number): void
     {
         $code = $this->getProvinceCodeValue($identification_number);
 
         if ($code < 1 || $code > $this->provinces) {
-            throw new IdentificationException("In your province code must be between 01 and {$this->provinces}.");
+            throw new Exception("In your province code must be between 01 and {$this->provinces}.");
         }
     }
 
@@ -116,14 +116,14 @@ class BaseIdentification implements IdentificationContract
      * Valid the third digit
      *
      * @param string $identification_number Identification document
-     * @throws IdentificationException
+     * @throws Exception
      */
     protected function thirdDigitValidation(string $identification_number): void
     {
         $third_digit = $this->getThirdDigitValue($identification_number);
 
         if ($third_digit != $this->thirdDigit) {
-            throw new IdentificationException("Field must have the third digit equal to {$this->thirdDigit}.");
+            throw new Exception("Field must have the third digit equal to {$this->thirdDigit}.");
         }
     }
 
@@ -131,14 +131,14 @@ class BaseIdentification implements IdentificationContract
      * Valid the lasts digits
      *
      * @param string $identification_number Identification document
-     * @throws IdentificationException
+     * @throws Exception
      */
     protected function lastsDigitsValidation(string $identification_number): void
     {
         $lasts_digits = $this->getLastsDigitsValue($identification_number);
 
         if ($lasts_digits != $this->lastDigits) {
-            throw new IdentificationException("Field does not have the last digits equal to {$this->lastDigits}.");
+            throw new Exception("Field does not have the last digits equal to {$this->lastDigits}.");
         }
     }
 
@@ -146,7 +146,7 @@ class BaseIdentification implements IdentificationContract
      * Module 10 Algorithm to validate if Certificates and RUC of natural person are valid.
      *
      * @param string $identification_number Identification document
-     * @throws IdentificationException The verified digit does not match the verification digit.
+     * @throws Exception The verified digit does not match the verification digit.
      */
     protected function moduleTenValidation(string $identification_number): void
     {
@@ -171,7 +171,7 @@ class BaseIdentification implements IdentificationContract
         $verified_digit_value = $residue == 0 ? $residue : 10 - $residue;
 
         if ($verified_digit_value != $check_digit_value) {
-            throw new IdentificationException('The identification number is invalid.');
+            throw new Exception('The identification number is invalid.');
         }
     }
 
@@ -179,7 +179,7 @@ class BaseIdentification implements IdentificationContract
      * Module 11 Algorithm to validate if RUC of Public Companies and Private Companies are valid.
      *
      * @param string $identification_number Identification document
-     * @throws IdentificationException The verified digit does not match the verification digit.
+     * @throws Exception The verified digit does not match the verification digit.
      */
     protected function moduleElevenValidation(string $identification_number): void
     {
@@ -198,7 +198,7 @@ class BaseIdentification implements IdentificationContract
         $verified_digit_value = $residue == 0 ? $residue : 11 - $residue;
 
         if ($verified_digit_value != $check_digit_value) {
-            throw new IdentificationException('The identification number is invalid.');
+            throw new Exception('The identification number is invalid.');
         }
     }
 

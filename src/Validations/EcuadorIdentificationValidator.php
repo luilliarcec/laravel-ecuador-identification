@@ -3,19 +3,12 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification\Validations;
 
+use Exception;
 use Illuminate\Validation\Validator;
-use Luilliarcec\LaravelEcuadorIdentification\Exceptions\IdentificationException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
 
 class EcuadorIdentificationValidator extends Validator
 {
-    /**
-     * Determine if the value is valid
-     *
-     * @var bool
-     */
-    private $isValid = false;
-
     /**
      * Validation types
      *
@@ -40,26 +33,19 @@ class EcuadorIdentificationValidator extends Validator
      * @param $value
      * @param $parameters
      * @return bool
-     * @throws IdentificationException
+     * @throws \Exception
      */
     public function validateEcuador($attribute, $value, $parameters)
     {
-        $validator = new EcuadorIdentification();
-
         $lowerRule = explode(':', strtolower($this->currentRule))[0];
 
         try {
-            $this->isValid = $validator->{$this->types[$parameters[0]]}($value) == null ? false : true;
-        } catch (\Exception $exception) {
-            throw new IdentificationException("Custom validation rule {$lowerRule}:{$parameters[0]} does not exist");
-        }
-
-        if (!$this->isValid) {
             $this->setCustomMessages([$lowerRule => $this->getMessageEcuador($attribute, $lowerRule)]);
-            return $this->isValid;
-        }
 
-        return $this->isValid;
+            return $this->passesEcuador($parameters, $value);
+        } catch (Exception $exception) {
+            throw new Exception("Custom validation rule {$lowerRule}:{$parameters[0]} does not exist");
+        }
     }
 
     /**
@@ -91,5 +77,19 @@ class EcuadorIdentificationValidator extends Validator
         return $this->getTranslator()->get($key) != $key ?
             $this->getTranslator()->get($key) :
             $attribute;
+    }
+
+    /**
+     * Determine if the data passes the validation rules.
+     *
+     * @param $parameters
+     * @param $value
+     * @return bool
+     */
+    protected function passesEcuador($parameters, $value)
+    {
+        $validator = new EcuadorIdentification();
+
+        return $validator->{$this->types[$parameters[0]]}($value) != null;
     }
 }
