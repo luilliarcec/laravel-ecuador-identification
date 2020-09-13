@@ -1,6 +1,6 @@
 <?php
 
-namespace Luilliarcec\LaravelEcuadorIdentification\Support;
+namespace Luilliarcec\LaravelEcuadorIdentification\Validations;
 
 use Exception;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\FinalCustomer;

@@ -3,7 +3,7 @@
 namespace Luilliarcec\LaravelEcuadorIdentification\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification as Identification;
+use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification as Identification;
 
 /**
  * @method static string|null validateFinalConsumer(string $identification_number)

@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Luilliarcec\LaravelEcuadorIdentification\Validations;
+namespace Luilliarcec\LaravelEcuadorIdentification;
 
 use Exception;
-use Illuminate\Validation\Validator;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
+use Illuminate\Validation\Validator as BaseValidator;
+use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification;
 
-class EcuadorIdentificationValidator extends Validator
+class Validator extends BaseValidator
 {
     /**
      * Validation types

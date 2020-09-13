@@ -2,10 +2,9 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification;
 
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator as FacadeValidator;
 use Illuminate\Support\ServiceProvider;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification;
-use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentificationValidator;
+use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification;
 
 class EcuadorIdentificationServiceProvider extends ServiceProvider
 {
@@ -14,8 +13,8 @@ class EcuadorIdentificationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::resolver(function ($translator, $data, $rules, $messages, $customAttributes) {
-            return new EcuadorIdentificationValidator($translator, $data, $rules, $messages, $customAttributes);
+        FacadeValidator::resolver(function ($translator, $data, $rules, $messages, $customAttributes) {
+            return new Validator($translator, $data, $rules, $messages, $customAttributes);
         });
     }
 
