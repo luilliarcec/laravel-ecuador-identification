@@ -1,9 +1,9 @@
 <?php
 
-namespace Luilliarcec\LaravelEcuadorIdentification\Tests\Units;
+namespace Luilliarcec\LaravelEcuadorIdentification\Tests\Unit;
 
 use Luilliarcec\LaravelEcuadorIdentification\Facades\EcuadorIdentification;
-use Luilliarcec\LaravelEcuadorIdentification\Support\EcuadorIdentification as Identification;
+use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification as Identification;
 use Luilliarcec\LaravelEcuadorIdentification\Tests\TestCase;
 
 class PersonalIdentificationTest extends TestCase

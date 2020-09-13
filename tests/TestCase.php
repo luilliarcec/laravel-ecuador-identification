@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Luilliarcec\LaravelEcuadorIdentification\Tests;
 
 use Luilliarcec\LaravelEcuadorIdentification\EcuadorIdentificationServiceProvider;
