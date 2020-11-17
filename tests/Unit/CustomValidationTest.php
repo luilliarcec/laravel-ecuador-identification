@@ -81,7 +81,7 @@ class CustomValidationTest extends TestCase
 
         $validator = $this->app['validator']->make($data, $rules);
 
-        $this->assertEquals('The identification field does not have the corresponding country format. (Ecuador)',
+        $this->assertEquals('The identification field is invalid.',
             $validator->getMessageBag()->get('identification')[0]);
     }
 
