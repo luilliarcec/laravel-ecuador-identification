@@ -1,0 +1,25 @@
+name: Run Tests
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+        branches: [ master ]
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php-versions: ['7.2', '7.3', '7.4']
+        name: Tests
+        steps:
+            -   uses: actions/checkout@v2
+            -   name: Steup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+            -   name: Install dependencies
+                run: composer install --prefer-dist --no-interaction
+            -   name: Run tests
+                run: vendor/bin/phpunit
