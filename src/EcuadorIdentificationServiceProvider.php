@@ -2,7 +2,7 @@
 
 namespace Luilliarcec\LaravelEcuadorIdentification;
 
-use Illuminate\Support\Facades\Validator as FacadeValidator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification;
 
@@ -13,9 +13,11 @@ class EcuadorIdentificationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        FacadeValidator::resolver(function ($translator, $data, $rules, $messages, $customAttributes) {
-            return new Validator($translator, $data, $rules, $messages, $customAttributes);
-        });
+        Validator::extendImplicit(
+            'ecuador',
+            '\Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification@validate',
+            'The :attribute field is invalid.'
+        );
     }
 
     /**
