@@ -3,6 +3,7 @@
 namespace Luilliarcec\LaravelEcuadorIdentification\Validations;
 
 use Exception;
+use BadMethodCallException;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\FinalCustomer;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\NaturalRuc;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\PersonalIdentification;
@@ -26,11 +27,28 @@ class EcuadorIdentification
     private $error;
 
     /**
+     * Validation types
+     *
+     * @var array
+     */
+    private const TYPES = [
+        'final_customer'             => 'validateFinalConsumer',
+        'personal_identification'    => 'validatePersonalIdentification',
+        'natural_ruc'                => 'validateNaturalRuc',
+        'public_ruc'                 => 'validatePublicRuc',
+        'private_ruc'                => 'validatePrivateRuc',
+        'ruc'                        => 'validateRuc',
+        'is_natural_person'          => 'validateIsNaturalPersons',
+        'is_juridical_person'        => 'validateIsJuridicalPersons',
+        'all_identifications'        => 'validateAllTypeIdentification',
+    ];
+
+    /**
      * Set Error
      *
      * @param string|null $error
      */
-    protected function setError($error): void
+    protected function setError(?string $error): void
     {
         $this->error = $error;
     }
@@ -46,6 +64,26 @@ class EcuadorIdentification
     }
 
     /**
+     * Validate that the Ecuadorian identification is valid
+     *
+     * @param $attribute
+     * @param $value
+     * @param $parameters
+     * @param $validator
+     * @return bool
+     */
+    public function validate($attribute, $value, $parameters, $validator)
+    {
+        try {
+            return !is_null($this->{self::TYPES[$parameters[0]]}($value));
+        } catch (Exception $exception) {
+            throw new BadMethodCallException(sprintf(
+                'Method %s::%s does not exist.', static::class, $parameters[0]
+            ));
+        }
+    }
+
+    /**
      * Validates the Ecuadorian Final Consumer
      *
      * @param string $identification_number Final Consumer Identification
@@ -56,8 +94,7 @@ class EcuadorIdentification
         $this->setError(null);
 
         try {
-            $identification = new FinalCustomer();
-            return $identification->validate($identification_number);
+            return (new FinalCustomer())->validate($identification_number);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
@@ -75,8 +112,7 @@ class EcuadorIdentification
         $this->setError(null);
 
         try {
-            $identification = new PersonalIdentification();
-            return $identification->validate($identification_number);
+            return (new PersonalIdentification())->validate($identification_number);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
@@ -94,8 +130,7 @@ class EcuadorIdentification
         $this->setError(null);
 
         try {
-            $identification = new NaturalRuc();
-            return $identification->validate($identification_number);
+            return (new NaturalRuc())->validate($identification_number);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
@@ -113,8 +148,7 @@ class EcuadorIdentification
         $this->setError(null);
 
         try {
-            $identification = new PublicRuc();
-            return $identification->validate($identification_number);
+            return (new PublicRuc())->validate($identification_number);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
@@ -132,8 +166,7 @@ class EcuadorIdentification
         $this->setError(null);
 
         try {
-            $identification = new PrivateRuc();
-            return $identification->validate($identification_number);
+            return (new PrivateRuc())->validate($identification_number);
         } catch (Exception $e) {
             $this->setError($e->getMessage());
             return null;
