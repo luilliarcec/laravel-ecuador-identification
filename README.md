@@ -1,7 +1,7 @@
 # Laravel Ecuador Identification
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/luilliarcec/laravel-ecuador-identification.svg)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
-[![Build Status](https://img.shields.io/travis/luilliarcec/laravel-ecuador-identification/master.svg)](https://travis-ci.org/luilliarcec/laravel-ecuador-identification)
+![Run Tests](https://github.com/luilliarcec/laravel-ecuador-identification/workflows/Run%20Tests/badge.svg?branch=master)
 [![Quality Score](https://img.shields.io/scrutinizer/g/luilliarcec/laravel-ecuador-identification)](https://scrutinizer-ci.com/g/luilliarcec/laravel-ecuador-identification)
 [![Total Downloads](https://img.shields.io/packagist/dt/luilliarcec/laravel-ecuador-identification)](https://packagist.org/packages/luilliarcec/laravel-ecuador-identification)
 [![GitHub license](https://img.shields.io/github/license/luilliarcec/laravel-ecuador-identification.svg)](https://github.com/luilliarcec/laravel-ecuador-identification/blob/master/LICENSE.md)
