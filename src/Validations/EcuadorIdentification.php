@@ -4,6 +4,7 @@ namespace Luilliarcec\LaravelEcuadorIdentification\Validations;
 
 use Exception;
 use BadMethodCallException;
+use Illuminate\Support\Str;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\FinalCustomer;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\NaturalRuc;
 use Luilliarcec\LaravelEcuadorIdentification\Support\Identifications\PersonalIdentification;
@@ -25,23 +26,6 @@ class EcuadorIdentification
      * @var string
      */
     private $error;
-
-    /**
-     * Validation types
-     *
-     * @var array
-     */
-    private const TYPES = [
-        'final_customer'             => 'validateFinalConsumer',
-        'personal_identification'    => 'validatePersonalIdentification',
-        'natural_ruc'                => 'validateNaturalRuc',
-        'public_ruc'                 => 'validatePublicRuc',
-        'private_ruc'                => 'validatePrivateRuc',
-        'ruc'                        => 'validateRuc',
-        'is_natural_person'          => 'validateIsNaturalPersons',
-        'is_juridical_person'        => 'validateIsJuridicalPersons',
-        'all_identifications'        => 'validateAllTypeIdentification',
-    ];
 
     /**
      * Set Error
@@ -74,8 +58,10 @@ class EcuadorIdentification
      */
     public function validate($attribute, $value, $parameters, $validator)
     {
+        $method = 'validate' . Str::studly($parameters[0]);
+
         try {
-            return !is_null($this->{self::TYPES[$parameters[0]]}($value));
+            return !is_null($this->{$method}($value));
         } catch (Exception $exception) {
             throw new BadMethodCallException(sprintf(
                 'Method %s::%s does not exist.', static::class, $parameters[0]
@@ -198,7 +184,7 @@ class EcuadorIdentification
      * @param string $identification_number Number of identification
      * @return string|null
      */
-    public function validateIsNaturalPersons(string $identification_number)
+    public function validateIsNaturalPerson(string $identification_number)
     {
         return $this->validatePersonalIdentification($identification_number) ?: $this->validateNaturalRuc($identification_number);
     }
@@ -209,7 +195,7 @@ class EcuadorIdentification
      * @param string $identification_number Number of identification
      * @return string|null
      */
-    public function validateIsJuridicalPersons(string $identification_number)
+    public function validateIsJuridicalPerson(string $identification_number)
     {
         return $this->validatePrivateRuc($identification_number) ?: $this->validatePublicRuc($identification_number);
     }
@@ -220,7 +206,7 @@ class EcuadorIdentification
      * @param string $identification_number Number of identification
      * @return string|null
      */
-    public function validateAllTypeIdentification(string $identification_number)
+    public function validateAllIdentifications(string $identification_number)
     {
         if (($result = $this->validateFinalConsumer($identification_number)) !== null) {
             return $result;
