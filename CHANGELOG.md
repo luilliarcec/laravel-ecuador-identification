@@ -2,11 +2,15 @@
 
 All notable changes to `laravel-ecuador-identification` will be documented in this file
 
-## 1.1.3 - 2020-04-12
+## 1.1.4 - 2020-12-01
+- Code optimization
+- Support php8
+
+## 1.1.3 - 2020-11-17
 - Code optimization
 - Using the Laravel Validator extension
 
-## 1.1.2 - 2020-04-12
+## 1.1.2 - 2020-09-13
 - Restructuring tests
 - Removing exception
 - Code optimization
