@@ -11,7 +11,7 @@ class FinalCustomer extends BaseIdentification
         $this->billingCode = '07';
     }
 
-    public function validate(string $identification_number): string
+    public function validate(string $identification_number)
     {
         if ($identification_number != "9999999999999") {
             throw new \Exception('The identification number is invalid.');
