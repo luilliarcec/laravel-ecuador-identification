@@ -6,9 +6,6 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class FinalCustomer extends BaseIdentification
 {
-    /**
-     * FinalCustomer constructor.
-     */
     public function __construct()
     {
         $this->billingCode = '07';

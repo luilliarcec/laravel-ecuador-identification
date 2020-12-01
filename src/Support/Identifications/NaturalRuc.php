@@ -6,9 +6,6 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class NaturalRuc extends BaseIdentification
 {
-    /**
-     * NaturalRuc constructor.
-     */
     public function __construct()
     {
         $this->lenght = 13;

@@ -6,9 +6,6 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class PrivateRuc extends BaseIdentification
 {
-    /**
-     * PrivateRuc constructor.
-     */
     public function __construct()
     {
         $this->lenght = 13;

@@ -6,9 +6,6 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class PersonalIdentification extends BaseIdentification
 {
-    /**
-     * PersonalIdentification constructor.
-     */
     public function __construct()
     {
         $this->lenght = 10;

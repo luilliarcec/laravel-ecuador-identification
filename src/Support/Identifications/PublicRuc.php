@@ -6,9 +6,6 @@ use Luilliarcec\LaravelEcuadorIdentification\Support\BaseIdentification;
 
 class PublicRuc extends BaseIdentification
 {
-    /**
-     * PublicRuc constructor.
-     */
     public function __construct()
     {
         $this->lenght = 13;
