@@ -24,34 +24,34 @@ class CustomValidationTest extends TestCase
     /** @test */
     public function validate_that_all_type_document_return_correct_value()
     {
-        $this->assertEquals('05', $this->ecuadorIdentification->validateAllTypeIdentification('1710034065')); // Personal Identification
-        $this->assertEquals('04', $this->ecuadorIdentification->validateAllTypeIdentification('1710034065001')); // Natural RUC
-        $this->assertEquals('04', $this->ecuadorIdentification->validateAllTypeIdentification('1790011674001')); // Private RUC
-        $this->assertEquals('04', $this->ecuadorIdentification->validateAllTypeIdentification('1760001550001')); // Public RUC
-        $this->assertEquals('07', $this->ecuadorIdentification->validateAllTypeIdentification('9999999999999')); // Final Customer
-        $this->assertNull($this->ecuadorIdentification->validateAllTypeIdentification('9999999999998'));
+        $this->assertEquals('05', $this->ecuadorIdentification->validateAllIdentifications('1710034065')); // Personal Identification
+        $this->assertEquals('04', $this->ecuadorIdentification->validateAllIdentifications('1710034065001')); // Natural RUC
+        $this->assertEquals('04', $this->ecuadorIdentification->validateAllIdentifications('1790011674001')); // Private RUC
+        $this->assertEquals('04', $this->ecuadorIdentification->validateAllIdentifications('1760001550001')); // Public RUC
+        $this->assertEquals('07', $this->ecuadorIdentification->validateAllIdentifications('9999999999999')); // Final Customer
+        $this->assertNull($this->ecuadorIdentification->validateAllIdentifications('9999999999998'));
     }
 
     /** @test */
     public function validate_is_juridical_person()
     {
-        $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPersons('1710034065'));
-        $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPersons('9999999999999'));
-        $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPersons('1710034065001'));
+        $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPerson('1710034065'));
+        $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPerson('9999999999999'));
+        $this->assertNull($this->ecuadorIdentification->validateIsJuridicalPerson('1710034065001'));
 
-        $this->assertEquals('04', $this->ecuadorIdentification->validateIsJuridicalPersons('1790011674001'));
-        $this->assertEquals('04', $this->ecuadorIdentification->validateIsJuridicalPersons('1760001550001'));
+        $this->assertEquals('04', $this->ecuadorIdentification->validateIsJuridicalPerson('1790011674001'));
+        $this->assertEquals('04', $this->ecuadorIdentification->validateIsJuridicalPerson('1760001550001'));
     }
 
     /** @test */
     public function validate_is_natural_person()
     {
-        $this->assertNull($this->ecuadorIdentification->validateIsNaturalPersons('1790011674001'));
-        $this->assertNull($this->ecuadorIdentification->validateIsNaturalPersons('1760001550001'));
-        $this->assertNull($this->ecuadorIdentification->validateIsNaturalPersons('9999999999999'));
+        $this->assertNull($this->ecuadorIdentification->validateIsNaturalPerson('1790011674001'));
+        $this->assertNull($this->ecuadorIdentification->validateIsNaturalPerson('1760001550001'));
+        $this->assertNull($this->ecuadorIdentification->validateIsNaturalPerson('9999999999999'));
 
-        $this->assertEquals('05', $this->ecuadorIdentification->validateIsNaturalPersons('1710034065'));
-        $this->assertEquals('04', $this->ecuadorIdentification->validateIsNaturalPersons('1710034065001'));
+        $this->assertEquals('05', $this->ecuadorIdentification->validateIsNaturalPerson('1710034065'));
+        $this->assertEquals('04', $this->ecuadorIdentification->validateIsNaturalPerson('1710034065001'));
     }
 
     /** @test */
