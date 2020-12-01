@@ -15,7 +15,7 @@ class EcuadorIdentificationServiceProvider extends ServiceProvider
     {
         Validator::extendImplicit(
             'ecuador',
-            '\Luilliarcec\LaravelEcuadorIdentification\Validations\EcuadorIdentification@validate',
+            EcuadorIdentification::class,
             'The :attribute field is invalid.'
         );
     }
