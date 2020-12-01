@@ -98,4 +98,27 @@ class PublicCompanyRucTest extends TestCase
 
         $this->assertEquals('04', EcuadorIdentification::validatePublicRuc('1760001550001'));
     }
+
+    /** @test */
+    public function validate_integration_with_validator_laravel_and_response_error_message()
+    {
+        $data = array('identification' => '1790011674001');
+        $rules = array('identification' => 'ecuador:public_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertEquals('The identification field is invalid.',
+            $validator->getMessageBag()->get('identification')[0]);
+    }
+
+    /** @test */
+    public function validate_integration_with_validator_laravel_and_response_success()
+    {
+        $data = array('identification' => '1760001550001');
+        $rules = array('identification' => 'ecuador:public_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertFalse($validator->fails());
+    }
 }

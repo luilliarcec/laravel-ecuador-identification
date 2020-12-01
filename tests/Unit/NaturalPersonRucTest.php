@@ -97,4 +97,27 @@ class NaturalPersonRucTest extends TestCase
         $this->assertNull(EcuadorIdentification::validateNaturalRuc('0154567890001'));
         $this->assertEquals('04', EcuadorIdentification::validateNaturalRuc('0134567890001'));
     }
+
+    /** @test */
+    public function validate_integration_with_validator_laravel_and_response_error_message()
+    {
+        $data = array('identification' => '0154567890001');
+        $rules = array('identification' => 'ecuador:natural_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertEquals('The identification field is invalid.',
+            $validator->getMessageBag()->get('identification')[0]);
+    }
+
+    /** @test */
+    public function validate_integration_with_validator_laravel_and_response_success()
+    {
+        $data = array('identification' => '0134567890001');
+        $rules = array('identification' => 'ecuador:natural_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertFalse($validator->fails());
+    }
 }
