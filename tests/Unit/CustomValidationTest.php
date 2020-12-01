@@ -71,13 +71,8 @@ class CustomValidationTest extends TestCase
     /** @test */
     public function validate_integration_with_validator_laravel_and_response_error_message()
     {
-        $data = [
-            'identification' => '1710034065002'
-        ];
-
-        $rules = [
-            'identification' => 'ecuador:natural_ruc'
-        ];
+        $data = array('identification' => '1710034065002');
+        $rules = array('identification' => 'ecuador:natural_ruc');
 
         $validator = $this->app['validator']->make($data, $rules);
 
@@ -88,13 +83,8 @@ class CustomValidationTest extends TestCase
     /** @test */
     public function validate_integration_with_validator_laravel_and_response_success()
     {
-        $data = [
-            'identification' => '1710034065001'
-        ];
-
-        $rules = [
-            'identification' => 'ecuador:natural_ruc'
-        ];
+        $data = array('identification' => '1710034065001');
+        $rules = array('identification' => 'ecuador:natural_ruc');
 
         $validator = $this->app['validator']->make($data, $rules);
 
