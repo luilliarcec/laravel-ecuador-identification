@@ -59,7 +59,7 @@ Validation rules:
 * [Ruc](#rule-ruc)
 * [Is Juridical Person](#rule-is_juridical_person)
 * [Is Natural Person](#rule-is_natural_person)
-* [All Type Identifications](#rule-all_identifications)
+* [All Identifications](#rule-all_identifications)
 
 <a name="rule-final_customer"></a>
 #### final_customer

@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-ecuador-identification` will be documented in this file
 
+## 1.1.5 - 2020-12-08
+- Bug fixed null values
+
 ## 1.1.4 - 2020-12-01
 - Code optimization
 - Support php8
