@@ -61,11 +61,11 @@ class EcuadorIdentification
         $method = 'validate' . Str::studly($parameters[0]);
 
         try {
-            if ($value) {
+            if (!is_null($value)) {
                 return !is_null($this->{$method}($value));
             }
 
-            return false;
+            return true;
         } catch (Exception $exception) {
             throw new BadMethodCallException(sprintf(
                 'Method %s::%s does not exist.', static::class, $parameters[0]
