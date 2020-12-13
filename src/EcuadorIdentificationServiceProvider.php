@@ -13,7 +13,7 @@ class EcuadorIdentificationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extendImplicit(
+        Validator::extend(
             'ecuador',
             EcuadorIdentification::class,
             'The :attribute field is invalid.'

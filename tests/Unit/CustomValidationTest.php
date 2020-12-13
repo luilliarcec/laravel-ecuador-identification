@@ -90,4 +90,54 @@ class CustomValidationTest extends TestCase
 
         $this->assertFalse($validator->fails());
     }
+
+    /** @test */
+    public function check_that_validation_does_not_run_on_null()
+    {
+        $data = array('identification' => null);
+        $rules = array('identification' => 'ecuador:natural_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertFalse($validator->fails());
+    }
+
+    /** @test */
+    public function check_that_validation_does_not_run_when_nullable()
+    {
+        $data = array('identification' => null);
+        $rules = array('identification' => 'nullable|ecuador:natural_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertFalse($validator->fails());
+    }
+
+    /** @test */
+    public function check_that_it_runs_when_required_and_null()
+    {
+        $data = array('identification' => null);
+        $rules = array('identification' => 'required|ecuador:natural_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertTrue($validator->fails());
+        $this->assertEquals('The identification field is required.',
+            $validator->getMessageBag()->get('identification')[0]
+        );
+    }
+
+    /** @test */
+    public function check_that_it_runs_when_required_and_not_null()
+    {
+        $data = array('identification' => '09');
+        $rules = array('identification' => 'required|ecuador:natural_ruc');
+
+        $validator = $this->app['validator']->make($data, $rules);
+
+        $this->assertTrue($validator->fails());
+        $this->assertEquals('The identification field is invalid.',
+            $validator->getMessageBag()->get('identification')[0]
+        );
+    }
 }
