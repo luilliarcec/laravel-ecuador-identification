@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-ecuador-identification` will be documented in this file
 
+## 2.0.0 - 2021-04-18
+- Dont use implicit rule
+
 ## 1.1.5 - 2020-12-08
 - Bug fixed null values
 
