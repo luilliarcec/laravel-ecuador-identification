@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-ecuador-identification` will be documented in this file
 
+## 3.0.0 - 2022-06-20
+- Support only for the latest version of laravel.
+
 ## 2.0.0 - 2021-04-18
 - Dont use implicit rule
 
