@@ -14,6 +14,12 @@ class BaseIdentification implements IdentificationContract
      * @var int
      */
     protected $provinces = 24;
+       
+    /**
+     * Province code for foreigners
+     * @var int
+     */
+    protected $foreignersCode = 30;
 
     /**
      * Length of the different types of identification
@@ -64,6 +70,7 @@ class BaseIdentification implements IdentificationContract
         $this->provinceCodeValidation($identification_number);
         $this->thirdDigitValidation($identification_number);
         $this->lastsDigitsValidation($identification_number);
+        $this->foreignersValidation($identification_number);
 
         if ($this instanceof PublicRuc || $this instanceof PrivateRuc) {
             $this->moduleElevenValidation($identification_number);
@@ -109,6 +116,23 @@ class BaseIdentification implements IdentificationContract
 
         if ($code < 1 || $code > $this->provinces) {
             throw new Exception("In your province code must be between 01 and {$this->provinces}.");
+        }
+    }
+    
+    /**
+     * Validate the province code (first two numbers of CI/RUC)
+     * The first 2 positions correspond to the province where it was issued,
+     * so the first two numbers will not be greater than 24 or less than 1
+     *
+     * @param string $identification_number Identification document
+     * @throws Exception
+     */
+    protected function foreignersValidation(string $identification_number): void
+    {
+        $code = $this->getProvinceCodeValue($identification_number);
+
+        if ($code !== 30) {
+            throw new Exception("The province code for foreigners can only be 30");
         }
     }
 
